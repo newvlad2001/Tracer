@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Tracer.Library.Entity
 {
-    class TraceResult
+    public class TraceResult
     {
-        public ConcurrentDictionary<int, ThreadTrace> ThreadTraces { get; }
+        [JsonPropertyName("threads")]
+        public ConcurrentDictionary<int, ThreadTrace> ThreadTraces { get; } = new();
 
         public ThreadTrace this[int id]
         {
@@ -31,9 +29,9 @@ namespace Tracer.Library.Entity
             }
         }
 
-        public TraceResult(ConcurrentDictionary<int, ThreadTrace> traces)
+        public ThreadTrace GetThreadTrace(int id)
         {
-            ThreadTraces = traces;
+            return ThreadTraces.GetOrAdd(id, new ThreadTrace(id));
         }
     }
 }

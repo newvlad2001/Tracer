@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
 using Tracer.Library.Entity;
 
 namespace Tracer.Library.Logic.Impl
 {
-    class Tracer : ITracer
+    public class TracerImpl : ITracer
     {
         private readonly TraceResult _traceResult;
 
-        public Tracer()
+        public TracerImpl()
         {
-            _traceResult = new TraceResult(new ConcurrentDictionary<int, ThreadTrace>());
+            _traceResult = new TraceResult();
         }
 
         public TraceResult GetTraceResult()
@@ -26,8 +20,7 @@ namespace Tracer.Library.Logic.Impl
 
         public void StartTrace()
         {
-            int id = Thread.CurrentThread.ManagedThreadId;
-            _traceResult[id] = new ThreadTrace(id);
+            var threadTrace = _traceResult.GetThreadTrace(Thread.CurrentThread.ManagedThreadId);
 
             var stackTrace = new StackTrace();
             var path = stackTrace.ToString().Split("\r\n", System.StringSplitOptions.None);
@@ -36,12 +29,12 @@ namespace Tracer.Library.Logic.Impl
             var className = stackTrace.GetFrames()[1].GetMethod().ReflectedType.Name;
             var methodName = stackTrace.GetFrames()[1].GetMethod().Name;
 
-            _traceResult[id].AddMethod(methodName, className, string.Join("", path));
+            threadTrace.AddMethod(methodName, className, string.Join("", path));
         }
 
         public void StopTrace()
         {
-            var threadTrace = _traceResult[Thread.CurrentThread.ManagedThreadId];
+            var threadTrace = _traceResult.GetThreadTrace(Thread.CurrentThread.ManagedThreadId);
 
             var stackTrace = new StackTrace();
             var path = stackTrace.ToString().Split("\r\n", System.StringSplitOptions.None);

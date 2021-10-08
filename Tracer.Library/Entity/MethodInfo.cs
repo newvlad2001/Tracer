@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Tracer.Library.Entity
 {
-    class MethodInfo
+    public class MethodInfo
     {
         private readonly Stopwatch _stopWatch = new();
 
@@ -17,13 +13,13 @@ namespace Tracer.Library.Entity
         public string MethodPath { get; }
 
         [JsonPropertyName("time"), XmlAttribute("time")]
-        public long Time { get; private set; }
+        public long Time { get; set; }
 
         [JsonPropertyName("name"), XmlAttribute("name")]
-        public string MethodName { get; private set; }
+        public string MethodName { get; set; }
 
         [JsonPropertyName("class"), XmlAttribute("class")]
-        public string ClassName { get; private set; }
+        public string ClassName { get; set; }
 
         [JsonPropertyName("methods"), XmlElement("methods")] 
         public List<MethodInfo> InnerMethods { get; set; }
@@ -38,7 +34,7 @@ namespace Tracer.Library.Entity
             _stopWatch.Start();
         }
 
-        public void CalculateTime()
+        public void CalcTime()
         {
             _stopWatch.Stop();
             Time = _stopWatch.ElapsedMilliseconds;

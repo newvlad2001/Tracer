@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Tracer.Library.Entity
 {
     [XmlType("thread")]
-    class ThreadTrace
+    public class ThreadTrace
     {
         [JsonPropertyName("id"), XmlAttribute("id")] 
         public int ThreadId { get; set; }
@@ -50,7 +46,7 @@ namespace Tracer.Library.Entity
                 MethodsInfo[index].InnerMethods = childs;
             }
 
-            MethodsInfo[index].CalculateTime();
+            MethodsInfo[index].CalcTime();
             ThreadTime += MethodsInfo[index].Time;
         }
     }

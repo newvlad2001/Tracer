@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using Tracer.Library.Entity;
 using SystemXml = System.Xml.Serialization;
 
 namespace Tracer.Library.Services.Serialization.Impl
 {
-    class XmlSerializer : ISerializer
+    public class XmlSerializer : ISerializer
     {
         public string Serialize(TraceResult traceResult)
         {
