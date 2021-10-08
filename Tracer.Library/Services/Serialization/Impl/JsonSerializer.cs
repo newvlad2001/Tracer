@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tracer.Library.Entity;
+using SystemJson = System.Text.Json;
 
 namespace Tracer.Library.Services.Serialization.Impl
 {
@@ -11,7 +12,8 @@ namespace Tracer.Library.Services.Serialization.Impl
     {
         public string Serialize(TraceResult result)
         {
-            throw new NotImplementedException();
+            var options = new SystemJson.JsonSerializerOptions() { WriteIndented = true };
+            return SystemJson.JsonSerializer.Serialize(result, options);
         }
     }
 }

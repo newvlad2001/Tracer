@@ -9,7 +9,7 @@ namespace Tracer.Library.Entity
 {
     class TraceResult
     {
-        private ConcurrentDictionary<int, ThreadTrace> ThreadTraces { get; }
+        public ConcurrentDictionary<int, ThreadTrace> ThreadTraces { get; }
 
         public ThreadTrace this[int id]
         {
