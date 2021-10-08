@@ -9,5 +9,31 @@ namespace Tracer.Library.Entity
 {
     class TraceResult
     {
+        private ConcurrentDictionary<int, ThreadTrace> ThreadTraces { get; }
+
+        public ThreadTrace this[int id]
+        {
+            get
+            {
+                if (!ThreadTraces.TryGetValue(id, out var trace))
+                {
+                    throw new ArgumentException($"No element with id = {id}.");
+                }
+
+                return trace;
+            }
+            set
+            {
+                if (!ThreadTraces.TryAdd(id, value))
+                {
+                    throw new ArgumentException($"Element with id = {id} already exists.");
+                }
+            }
+        }
+
+        public TraceResult(ConcurrentDictionary<int, ThreadTrace> traces)
+        {
+            ThreadTraces = traces;
+        }
     }
 }
