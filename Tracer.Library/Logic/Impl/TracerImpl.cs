@@ -6,12 +6,7 @@ namespace Tracer.Library.Logic.Impl
 {
     public class TracerImpl : ITracer
     {
-        private readonly TraceResult _traceResult;
-
-        public TracerImpl()
-        {
-            _traceResult = new TraceResult();
-        }
+        private readonly TraceResult _traceResult = new();
 
         public TraceResult GetTraceResult()
         {
@@ -20,28 +15,28 @@ namespace Tracer.Library.Logic.Impl
 
         public void StartTrace()
         {
-            var threadTrace = _traceResult.GetThreadTrace(Thread.CurrentThread.ManagedThreadId);
+            var threadTrace = _traceResult.GetOrAddThreadTrace(Thread.CurrentThread.ManagedThreadId);
 
             var stackTrace = new StackTrace();
             var path = stackTrace.ToString().Split("\r\n", System.StringSplitOptions.None);
 
-            path[0] = "";
+            path[0] = string.Empty;
             var className = stackTrace.GetFrames()[1].GetMethod().ReflectedType.Name;
             var methodName = stackTrace.GetFrames()[1].GetMethod().Name;
 
-            threadTrace.AddMethod(methodName, className, string.Join("", path));
+            threadTrace.AddMethod(methodName, className, string.Join(string.Empty, path));
         }
 
         public void StopTrace()
         {
-            var threadTrace = _traceResult.GetThreadTrace(Thread.CurrentThread.ManagedThreadId);
+            var threadTrace = _traceResult.GetOrAddThreadTrace(Thread.CurrentThread.ManagedThreadId);
 
             var stackTrace = new StackTrace();
             var path = stackTrace.ToString().Split("\r\n", System.StringSplitOptions.None);
 
-            path[0] = "";
+            path[0] = string.Empty;
 
-            threadTrace.DeleteMethod(string.Join("", path));
+            threadTrace.DeleteMethod(string.Join(string.Empty, path));
         }
     }
 }

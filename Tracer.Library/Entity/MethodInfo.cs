@@ -12,14 +12,14 @@ namespace Tracer.Library.Entity
         [JsonIgnore, XmlIgnore]
         public string MethodPath { get; }
 
-        [JsonPropertyName("time"), XmlAttribute("time")]
-        public long Time { get; set; }
+        [JsonPropertyName("class"), XmlAttribute("class")]
+        public string ClassName { get; set; }
 
         [JsonPropertyName("name"), XmlAttribute("name")]
         public string MethodName { get; set; }
 
-        [JsonPropertyName("class"), XmlAttribute("class")]
-        public string ClassName { get; set; }
+        [JsonPropertyName("time"), XmlAttribute("time")]
+        public long Time { get; set; }        
 
         [JsonPropertyName("methods"), XmlElement("methods")] 
         public List<MethodInfo> InnerMethods { get; set; }

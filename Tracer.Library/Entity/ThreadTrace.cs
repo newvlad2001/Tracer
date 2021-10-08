@@ -7,18 +7,17 @@ namespace Tracer.Library.Entity
     [XmlType("thread")]
     public class ThreadTrace
     {
-        [JsonPropertyName("id"), XmlAttribute("id")] 
+        [JsonIgnore, XmlAttribute("id")]
         public int ThreadId { get; set; }
 
-        [JsonPropertyName("time"), XmlAttribute("time")] 
+        [JsonPropertyName("time"), XmlAttribute("time")]
         public long ThreadTime { get; set; }
 
-        [JsonPropertyName("methods"), XmlElement("methods")] 
-        public List<MethodInfo> MethodsInfo { get; set; }
+        [JsonPropertyName("methods"), XmlElement("methods")]
+        public List<MethodInfo> MethodsInfo { get; set; } = new();
 
         public ThreadTrace(int threadId)
         {
-            MethodsInfo = new List<MethodInfo>();
             ThreadId = threadId;
         }
 
@@ -36,14 +35,10 @@ namespace Tracer.Library.Entity
             if (index != MethodsInfo.Count - 1)
             {
                 var length = MethodsInfo.Count - 1 - index;
-                var childs = MethodsInfo.GetRange(index + 1, length);
+                var inners = MethodsInfo.GetRange(index + 1, length);
 
-                for (var i = 0; i < length; i++)
-                {
-                    MethodsInfo.RemoveAt(MethodsInfo.Count - 1);
-                }
-
-                MethodsInfo[index].InnerMethods = childs;
+                MethodsInfo.RemoveRange(index + 1, length);
+                MethodsInfo[index].InnerMethods = inners;
             }
 
             MethodsInfo[index].CalcTime();

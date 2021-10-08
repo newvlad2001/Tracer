@@ -20,8 +20,8 @@ namespace Tracer.Library.Services.Serialization.Impl
                 xmlSerializer.Serialize(writer, data);
             }
 
-            var result = stringWriter.ToString().Replace("ArrayOfThread", "root");
-
+            var result = stringWriter.ToString();
+            stringWriter.Dispose();
             return result;
         }
     }
