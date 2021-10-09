@@ -23,9 +23,9 @@ namespace Tracer.Library.Entity
 
         public ThreadTrace() { }
 
-        public void AddMethod(MethodInfo method)
+        public void AddMethod(string methodName, string className, string methodPath)
         {
-            MethodsInfo.Add(method);
+            MethodsInfo.Add(new MethodInfo(methodName, className, string.Join(string.Empty, methodPath)));
         }
 
         public void DeleteMethod(string methodPath)
