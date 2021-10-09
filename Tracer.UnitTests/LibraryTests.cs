@@ -8,7 +8,7 @@ using Tracer.Library.Logic.Impl;
 namespace Tracer.UnitTests
 {
     [TestFixture]
-    public class Tests
+    public class LibraryTests
     {
         private ITracer _tracer;
 

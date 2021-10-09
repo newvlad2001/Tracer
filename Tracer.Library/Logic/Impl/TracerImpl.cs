@@ -18,11 +18,12 @@ namespace Tracer.Library.Logic.Impl
             var threadTrace = _traceResult.GetOrAddThreadTrace(Thread.CurrentThread.ManagedThreadId);
 
             var stackTrace = new StackTrace();
-            var path = stackTrace.ToString().Split("\r\n", System.StringSplitOptions.None);
-
+            var path = stackTrace.ToString().Split("\r\n");
             path[0] = string.Empty;
-            var className = stackTrace.GetFrames()[1].GetMethod().ReflectedType.Name;
-            var methodName = stackTrace.GetFrames()[1].GetMethod().Name;
+
+            StackFrame frame = stackTrace.GetFrames()[1];
+            var className = frame.GetMethod().ReflectedType.Name;
+            var methodName = frame.GetMethod().Name;
 
             threadTrace.AddMethod(new MethodInfo(methodName, className, string.Join(string.Empty, path)));
         }
@@ -32,8 +33,7 @@ namespace Tracer.Library.Logic.Impl
             var threadTrace = _traceResult.GetOrAddThreadTrace(Thread.CurrentThread.ManagedThreadId);
 
             var stackTrace = new StackTrace();
-            var path = stackTrace.ToString().Split("\r\n", System.StringSplitOptions.None);
-
+            var path = stackTrace.ToString().Split("\r\n");
             path[0] = string.Empty;
 
             threadTrace.DeleteMethod(string.Join(string.Empty, path));
