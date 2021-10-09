@@ -24,7 +24,7 @@ namespace Tracer.Library.Logic.Impl
             var className = stackTrace.GetFrames()[1].GetMethod().ReflectedType.Name;
             var methodName = stackTrace.GetFrames()[1].GetMethod().Name;
 
-            threadTrace.AddMethod(methodName, className, string.Join(string.Empty, path));
+            threadTrace.AddMethod(new MethodInfo(methodName, className, string.Join(string.Empty, path)));
         }
 
         public void StopTrace()
